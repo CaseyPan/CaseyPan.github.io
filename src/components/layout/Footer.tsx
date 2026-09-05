@@ -49,13 +49,13 @@ export function Footer() {
               >
                 <GithubIcon className="h-4 w-4" /> GitHub
               </Link>
-              <Link
+              <a
                 href={profile.resumeHref}
                 download
                 className="inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent-ink"
               >
                 <FileText className="h-4 w-4" /> Résumé
-              </Link>
+              </a>
             </div>
           </div>
         </div>

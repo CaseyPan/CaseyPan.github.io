@@ -43,14 +43,14 @@ export function Hero() {
                 <NotebookPen className="h-4 w-4" />
                 Read my notes
               </Link>
-              <Link
+              <a
                 href={profile.resumeHref}
                 download
                 className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-ink-soft transition-colors duration-200 hover:text-accent-ink"
               >
                 <Download className="h-4 w-4" />
                 Résumé
-              </Link>
+              </a>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-border pt-6 font-mono-label text-xs text-ink-soft">

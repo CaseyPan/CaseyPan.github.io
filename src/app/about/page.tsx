@@ -121,13 +121,13 @@ export default function AboutPage() {
                 >
                   <Mail className="h-4 w-4" /> Email me
                 </Link>
-                <Link
+                <a
                   href={profile.resumeHref}
                   download
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-4 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent-ink"
                 >
                   <Download className="h-4 w-4" /> Download résumé
-                </Link>
+                </a>
               </div>
             </Card>
 

@@ -48,13 +48,13 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-2 md:flex">
-            <Link
+            <a
               href={profile.resumeHref}
               download
               className="rounded-full border border-border px-3.5 py-2 text-sm text-ink-soft transition-colors hover:border-accent hover:text-accent-ink"
             >
               Résumé
-            </Link>
+            </a>
             <Link
               href={profile.social.email}
               className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-ink"
@@ -102,13 +102,13 @@ export function Header() {
               );
             })}
             <div className="mt-2 flex items-center gap-2 border-t border-border pt-4">
-              <Link
+              <a
                 href={profile.resumeHref}
                 download
                 className="flex-1 rounded-full border border-border px-4 py-2.5 text-center text-sm text-ink-soft"
               >
                 Résumé
-              </Link>
+              </a>
               <Link
                 href={profile.social.email}
                 className="flex-1 rounded-full bg-accent px-4 py-2.5 text-center text-sm font-medium text-white"
