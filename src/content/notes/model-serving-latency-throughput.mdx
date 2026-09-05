@@ -1,0 +1,75 @@
+---
+title: "Model Serving: Latency, Throughput, and Batch Size"
+summary: "Notes on the trade-off between latency and throughput when serving a model, and why batch size is the knob that controls it."
+date: "2026-07-02"
+category: "AI Infrastructure"
+tags: ["Model Serving", "Performance", "Inference"]
+featured: true
+sample: true
+---
+
+I've spent most of my career optimizing systems where "fast" mostly meant
+"low latency for one request." Model serving reframes the problem, and
+this note is me working through why.
+
+## Two numbers that trade off against each other
+
+- **Latency** — how long a single request takes, end to end.
+- **Throughput** — how many requests the system can handle per second,
+  in aggregate.
+
+For a lot of traditional backend work, improving one tends to improve the
+other: a faster function makes individual requests quicker *and* lets you
+handle more of them. Model inference doesn't behave the same way, because
+of one specific fact — running inference on a batch of 8 inputs at once
+is often only slightly slower than running it on 1, especially on a GPU
+where the hardware is heavily underutilized at batch size 1.
+
+## Why batching changes the shape of the problem
+
+If a single forward pass has a lot of fixed overhead (kernel launches,
+memory transfers, underutilized compute), then:
+
+- Batch size 1: pay the fixed overhead once per request. Low latency,
+  poor hardware utilization, low throughput.
+- Batch size 32: pay the fixed overhead once per 32 requests. Higher
+  utilization, higher throughput — but any individual request now has to
+  wait for the batch to fill (or for a timeout) before it even starts
+  running.
+
+This is the core trade-off: **batching improves throughput by making
+individual requests wait**. There's no batch size that's simply "better" —
+it depends on whether the workload is latency-sensitive (an interactive
+request) or throughput-sensitive (a bulk offline job).
+
+## The metric that actually matters: tail latency
+
+Average latency hides the thing you usually care about. If p50 latency is
+40ms but p99 is 400ms, 1 in 100 users is having a much worse experience —
+and in a system with many dependent calls, tail latency compounds. When
+I've read about serving systems (vLLM, Triton, and similar), a recurring
+theme is measuring p50/p95/p99 separately rather than reporting a single
+average, precisely because batching strategies can quietly move latency
+into the tail even while average latency looks fine.
+
+## Dynamic batching, at a conceptual level
+
+A static batch size means picking one number and living with it. Dynamic
+(or "continuous") batching is the more interesting idea: the server
+accumulates incoming requests for a short window (or until a batch fills),
+runs them together, and adjusts based on load. Under low traffic, batches
+stay small and latency stays low. Under high traffic, batches grow and
+throughput scales — without a human manually re-tuning the batch size.
+
+I haven't yet implemented a dynamic batcher myself — this is conceptual
+understanding from reading, not hands-on experience — but it's the piece
+I'm most interested in building next: a small benchmarking harness that
+sweeps batch size and concurrency, and plots the resulting latency vs.
+throughput curve, to make this trade-off concrete instead of theoretical.
+
+<Callout type="warning">
+This note reflects my current understanding while learning model serving,
+not professional ML infrastructure experience. It's included as sample
+content to show how notes render on this site — see the disclaimer at the
+top of the notes index.
+</Callout>

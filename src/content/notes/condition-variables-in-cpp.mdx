@@ -1,0 +1,124 @@
+---
+title: "How Condition Variables Work in C++"
+summary: "A practical walkthrough of std::condition_variable — why the predicate loop matters, what spurious wakeups actually are, and a minimal producer/consumer example."
+date: "2026-06-14"
+category: "Systems & Infrastructure"
+tags: ["C++", "Concurrency", "Multithreading"]
+featured: true
+sample: true
+---
+
+Condition variables are one of those primitives that look simple in a code
+snippet and then bite you the first time two threads race in a way you
+didn't expect. This note is my attempt to write down a mental model that
+has held up in practice — not a full textbook treatment.
+
+## The core problem
+
+A condition variable lets a thread sleep until some condition becomes true,
+without burning CPU on a busy loop. But a condition variable by itself
+doesn't know anything about your condition — it's just a signaling
+mechanism. All the actual state lives in memory you protect with a mutex.
+
+That split is the source of almost every bug in this area: people treat
+`wait()` as "block until notified," when it actually means "block until
+notified, then go check the condition yourself."
+
+## Why you always loop on the predicate
+
+```cpp
+std::unique_lock<std::mutex> lock(mtx);
+cv.wait(lock, [&] { return !queue.empty(); });
+```
+
+That lambda isn't optional convenience — it's the whole point. Two things
+can happen that make a bare `wait()` unsafe:
+
+- **Spurious wakeups.** The OS is allowed to wake a waiting thread even
+  though nobody called `notify_*`. This is a documented part of the
+  standard, not a bug you're unlucky to hit.
+- **Lost wakeups / stale state.** Even with a real notification, by the
+  time your thread reacquires the lock, another thread might have already
+  consumed whatever you were waiting for.
+
+The predicate-checking overload of `wait` handles both: it re-checks the
+condition every time it wakes up, and keeps sleeping if it isn't true yet.
+Writing the raw loop yourself makes this obvious:
+
+```cpp
+while (!predicate()) {
+  cv.wait(lock);
+}
+```
+
+If you ever see a condition variable used without a loop or predicate
+around it, treat it as a bug until proven otherwise.
+
+## A minimal producer/consumer
+
+```cpp
+std::mutex mtx;
+std::condition_variable cv;
+std::queue<int> queue;
+bool done = false;
+
+void producer() {
+  for (int i = 0; i < 10; ++i) {
+    {
+      std::lock_guard<std::mutex> lock(mtx);
+      queue.push(i);
+    }
+    cv.notify_one();
+  }
+  {
+    std::lock_guard<std::mutex> lock(mtx);
+    done = true;
+  }
+  cv.notify_all();
+}
+
+void consumer() {
+  std::unique_lock<std::mutex> lock(mtx);
+  while (!done || !queue.empty()) {
+    cv.wait(lock, [&] { return !queue.empty() || done; });
+    while (!queue.empty()) {
+      int value = queue.front();
+      queue.pop();
+      lock.unlock();
+      // process(value) — do work outside the lock
+      lock.lock();
+    }
+  }
+}
+```
+
+A few details that matter here:
+
+- The mutex is released **before** `notify_one()` is strictly necessary,
+  but pushing to the queue still has to happen under the lock — the
+  notification order matters less than the state mutation being
+  protected.
+- Processing work happens outside the lock (`unlock()` / `lock()` around
+  the actual work) so a slow consumer doesn't block the producer from
+  pushing more items.
+- `notify_all()` on shutdown, not `notify_one()` — every waiting consumer
+  needs a chance to observe `done`.
+
+## notify_one vs. notify_all
+
+`notify_one` wakes exactly one waiting thread (or zero, if none are
+waiting — the notification isn't queued). `notify_all` wakes all of them.
+The failure mode I've actually hit: using `notify_one` when multiple
+threads are waiting on *different* conditions but sharing the same
+condition variable. The OS doesn't know which thread "should" wake up —
+it might wake a thread whose predicate is still false, which just goes
+back to sleep, and the thread that actually needed the signal never gets
+woken. If more than one logically distinct condition shares a CV, prefer
+`notify_all` or split into separate condition variables.
+
+<Callout type="note">
+This note is sample content written to demonstrate the notes system on
+this site, not a finished personal essay. The technical content is
+accurate to the best of my understanding, but treat it as a working note
+rather than a polished reference.
+</Callout>
