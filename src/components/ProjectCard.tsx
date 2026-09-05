@@ -56,7 +56,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </Link>
         ) : (
           <span className="font-mono-label inline-flex items-center gap-1.5 text-xs text-ink-soft/50">
-            <GithubIcon className="h-4 w-4" /> repo TODO
+            <GithubIcon className="h-4 w-4" /> {project.githubNote ?? "repo TODO"}
           </span>
         )}
         {project.demoHref ? (

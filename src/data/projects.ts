@@ -27,7 +27,8 @@ export type Project = {
   technologies: string[];
   status: ProjectStatus;
   categories: ProjectCategory[];
-  githubHref?: string; // TODO: add real repo link when public
+  githubHref?: string;
+  githubNote?: string; // shown instead of "repo TODO" when there deliberately isn't a repo (e.g. proprietary work)
   demoHref?: string;
   featured: boolean;
 };
@@ -47,7 +48,8 @@ export const projects: Project[] = [
     technologies: ["C++", "Multithreading", "Mutex Synchronization", "Shared Memory", "Linux"],
     status: "SHIPPED",
     categories: ["Systems", "Performance"],
-    githubHref: undefined, // proprietary — internal MediaTek project
+    githubHref: undefined,
+    githubNote: "Proprietary — MediaTek internal project",
     demoHref: undefined,
     featured: true,
   },
@@ -98,7 +100,7 @@ export const projects: Project[] = [
     technologies: ["React.js", "T5", "NLP", "Hugging Face Transformers"],
     status: "SHIPPED",
     categories: ["Machine Learning", "Developer Tools"],
-    githubHref: undefined, // TODO: add repo link
+    githubHref: "https://github.com/weiyu0824/Chopia",
     demoHref: undefined,
     featured: true,
   },
