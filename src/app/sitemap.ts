@@ -1,12 +1,23 @@
 import type { MetadataRoute } from "next";
-import { getAllNotesMeta } from "@/lib/notes";
+import { getAllNotesMeta, getSeriesWithNotes } from "@/lib/notes";
+import { getAllGrowthNotes } from "@/lib/growth";
 
 const siteUrl = "https://caseypan.github.io";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/experience", "/projects", "/notes", "/about"].map((route) => ({
+  const staticRoutes = [
+    "",
+    "/experience",
+    "/projects",
+    "/notes",
+    "/about",
+    "/beyond-work",
+    "/beyond-work/books",
+    "/beyond-work/travel",
+    "/beyond-work/growth",
+  ].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
   }));
@@ -16,5 +27,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: note.date,
   }));
 
-  return [...staticRoutes, ...noteRoutes];
+  const seriesRoutes = getSeriesWithNotes().map(({ series }) => ({
+    url: `${siteUrl}/notes/series/${series.slug}`,
+    lastModified: new Date(),
+  }));
+
+  const growthRoutes = getAllGrowthNotes().map((entry) => ({
+    url: `${siteUrl}/beyond-work/growth/${entry.slug}`,
+    lastModified: entry.date,
+  }));
+
+  return [...staticRoutes, ...noteRoutes, ...seriesRoutes, ...growthRoutes];
 }

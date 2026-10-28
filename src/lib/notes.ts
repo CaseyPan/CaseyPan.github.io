@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
+import { seriesList, getSeriesInfo, type SeriesInfo } from "@/data/series";
 
 const NOTES_DIR = path.join(process.cwd(), "src/content/notes");
 
@@ -18,6 +19,8 @@ export type NoteFrontmatter = {
   tags: string[];
   featured?: boolean;
   sample?: boolean;
+  series?: string; // slug into seriesList, e.g. "cpp"
+  seriesOrder?: number;
 };
 
 export type NoteMeta = NoteFrontmatter & {
@@ -123,3 +126,46 @@ export const noteCategories: NoteCategory[] = [
   "Systems & Infrastructure",
   "AI Infrastructure",
 ];
+
+function notesForSeries(slug: string): NoteMeta[] {
+  return getAllNotesMeta()
+    .filter((note) => note.series === slug)
+    .sort((a, b) => (a.seriesOrder ?? 0) - (b.seriesOrder ?? 0));
+}
+
+/** Only series with at least one published note — no empty placeholders. */
+export function getSeriesWithNotes(): { series: SeriesInfo; notes: NoteMeta[] }[] {
+  return seriesList
+    .map((series) => ({ series, notes: notesForSeries(series.slug) }))
+    .filter((entry) => entry.notes.length > 0);
+}
+
+export function getNotesInSeries(slug: string): NoteMeta[] {
+  return notesForSeries(slug);
+}
+
+export function getSeriesPosition(slug: string): {
+  series: SeriesInfo;
+  index: number;
+  total: number;
+  previous: NoteMeta | null;
+  next: NoteMeta | null;
+} | null {
+  const note = getAllNotesMeta().find((n) => n.slug === slug);
+  if (!note?.series) return null;
+
+  const series = getSeriesInfo(note.series);
+  if (!series) return null;
+
+  const notesInSeries = notesForSeries(note.series);
+  const index = notesInSeries.findIndex((n) => n.slug === slug);
+  if (index === -1) return null;
+
+  return {
+    series,
+    index,
+    total: notesInSeries.length,
+    previous: index > 0 ? notesInSeries[index - 1] : null,
+    next: index < notesInSeries.length - 1 ? notesInSeries[index + 1] : null,
+  };
+}

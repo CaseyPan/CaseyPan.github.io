@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Clock, FlaskConical } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, FlaskConical, Layers } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Tag } from "@/components/ui/Tag";
 import { NoteContent } from "@/components/notes/NoteContent";
@@ -12,6 +12,7 @@ import {
   getAdjacentNotes,
   getNoteBySlug,
   getRelatedNotes,
+  getSeriesPosition,
 } from "@/lib/notes";
 import { extractToc } from "@/lib/toc";
 
@@ -55,6 +56,7 @@ export default async function NotePage({
   const toc = extractToc(note.content);
   const { previous, next } = getAdjacentNotes(slug);
   const related = getRelatedNotes(slug, 2);
+  const seriesPosition = getSeriesPosition(slug);
 
   return (
     <article className="py-14 sm:py-20">
@@ -75,6 +77,15 @@ export default async function NotePage({
               <span className="font-mono-label inline-flex items-center gap-1 rounded-full border border-border bg-bg px-2 py-0.5 text-[10px] text-ink-soft">
                 <FlaskConical className="h-3 w-3" /> sample content
               </span>
+            )}
+            {seriesPosition && (
+              <Link
+                href={`/notes/series/${seriesPosition.series.slug}`}
+                className="font-mono-label inline-flex items-center gap-1 rounded-full border border-border bg-bg px-2 py-0.5 text-[10px] text-ink-soft transition-colors hover:border-accent hover:text-accent-ink"
+              >
+                <Layers className="h-3 w-3" /> {seriesPosition.series.title} · Part{" "}
+                {seriesPosition.index + 1} of {seriesPosition.total}
+              </Link>
             )}
           </div>
 
@@ -150,6 +161,46 @@ export default async function NotePage({
                 <span />
               )}
             </nav>
+
+            {seriesPosition && (seriesPosition.previous || seriesPosition.next) && (
+              <div className="mt-10 rounded-xl border border-border bg-highlight/40 p-5">
+                <p className="font-mono-label mb-3 flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-accent-ink">
+                  <Layers className="h-3 w-3" /> More in {seriesPosition.series.title}
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {seriesPosition.previous ? (
+                    <Link
+                      href={`/notes/${seriesPosition.previous.slug}`}
+                      className="group rounded-lg border border-border bg-surface p-3 transition-colors hover:border-accent"
+                    >
+                      <span className="font-mono-label text-[10px] uppercase tracking-wide text-ink-soft/70">
+                        Part {seriesPosition.index} — Previous
+                      </span>
+                      <p className="mt-1 text-sm font-medium text-ink group-hover:text-accent-ink">
+                        {seriesPosition.previous.title}
+                      </p>
+                    </Link>
+                  ) : (
+                    <span />
+                  )}
+                  {seriesPosition.next ? (
+                    <Link
+                      href={`/notes/${seriesPosition.next.slug}`}
+                      className="group rounded-lg border border-border bg-surface p-3 transition-colors hover:border-accent"
+                    >
+                      <span className="font-mono-label text-[10px] uppercase tracking-wide text-ink-soft/70">
+                        Part {seriesPosition.index + 2} — Next
+                      </span>
+                      <p className="mt-1 text-sm font-medium text-ink group-hover:text-accent-ink">
+                        {seriesPosition.next.title}
+                      </p>
+                    </Link>
+                  ) : (
+                    <span />
+                  )}
+                </div>
+              </div>
+            )}
 
             {related.length > 0 && (
               <div className="mt-12 border-t border-border pt-8">
