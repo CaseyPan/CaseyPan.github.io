@@ -23,7 +23,7 @@ export default function BooksPage() {
             <p className="text-sm text-ink-soft">No books logged yet — check back soon.</p>
           </div>
         ) : (
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {books.map((book) => (
               <BookCard key={book.slug} book={book} />
             ))}

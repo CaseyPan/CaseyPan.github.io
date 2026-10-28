@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllNotesMeta, getSeriesWithNotes } from "@/lib/notes";
 import { getAllGrowthNotes } from "@/lib/growth";
+import { books } from "@/data/books";
 
 const siteUrl = "https://caseypan.github.io";
 
@@ -37,5 +38,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: entry.date,
   }));
 
-  return [...staticRoutes, ...noteRoutes, ...seriesRoutes, ...growthRoutes];
+  const bookRoutes = books.map((book) => ({
+    url: `${siteUrl}/beyond-work/books/${book.slug}`,
+    lastModified: book.dateFinished ?? new Date(),
+  }));
+
+  return [...staticRoutes, ...noteRoutes, ...seriesRoutes, ...growthRoutes, ...bookRoutes];
 }

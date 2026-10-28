@@ -7,6 +7,8 @@ export type Book = {
   slug: string;
   title: string;
   author: string;
+  cover?: string; // path under /public, e.g. "/images/books/slug.jpg"
+  dateFinished?: string; // "YYYY-MM-DD" — when status is READ
   status: BookStatus;
   rating?: number; // out of 5
   review: string[]; // paragraphs
@@ -18,6 +20,8 @@ export const books: Book[] = [
     slug: "anxious-people",
     title: "Anxious People",
     author: "Fredrik Backman",
+    cover: "/images/books/anxious-people.jpg",
+    dateFinished: undefined, // TODO: when did you finish this one?
     status: "READ",
     rating: 4.8,
     review: [
@@ -32,6 +36,8 @@ export const books: Book[] = [
     slug: "eleanor-oliphant-is-completely-fine",
     title: "Eleanor Oliphant is Completely Fine",
     author: "Gail Honeyman",
+    cover: "/images/books/eleanor-oliphant-is-completely-fine.jpg",
+    dateFinished: undefined, // TODO: when did you finish this one?
     status: "READ",
     rating: 3.8,
     review: [

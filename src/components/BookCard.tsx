@@ -1,5 +1,6 @@
-import { Star, TriangleAlert } from "lucide-react";
-import { Card } from "@/components/ui/Card";
+import Image from "next/image";
+import Link from "next/link";
+import { Star } from "lucide-react";
 import type { Book, BookStatus } from "@/data/books";
 
 const statusLabel: Record<BookStatus, string> = {
@@ -16,42 +17,42 @@ const statusClasses: Record<BookStatus, string> = {
 
 export function BookCard({ book }: { book: Book }) {
   return (
-    <Card hover={false} className="flex h-full flex-col">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h3 className="font-serif-display text-xl leading-snug text-ink">{book.title}</h3>
-          <p className="mt-1 text-sm text-ink-soft">{book.author}</p>
-        </div>
+    <Link
+      href={`/beyond-work/books/${book.slug}`}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_12px_24px_rgba(184,77,104,0.08)]"
+    >
+      <div className="relative aspect-[2/3] w-full overflow-hidden bg-highlight/40">
+        {book.cover ? (
+          <Image
+            src={book.cover}
+            alt={`Cover of ${book.title}`}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="font-serif-display px-4 text-center text-sm text-ink-soft/60">
+              {book.title}
+            </span>
+          </div>
+        )}
         <span
-          className={`font-mono-label inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] tracking-wide ${statusClasses[book.status]}`}
+          className={`font-mono-label absolute right-2.5 top-2.5 inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] tracking-wide backdrop-blur-sm ${statusClasses[book.status]}`}
         >
           {statusLabel[book.status]}
         </span>
       </div>
 
-      {book.rating !== undefined && (
-        <div className="font-mono-label mt-3 inline-flex items-center gap-1.5 text-sm text-accent-ink">
-          <Star className="h-4 w-4 fill-current" /> {book.rating.toFixed(1)} / 5
-        </div>
-      )}
-
-      <div className="mt-4 space-y-3 text-sm leading-relaxed text-ink-soft">
-        {book.review.map((paragraph, i) => (
-          <p key={i}>{paragraph}</p>
-        ))}
-      </div>
-
-      {book.contentWarning && (
-        <div className="not-prose mt-5 flex gap-3 rounded-xl border border-accent/40 bg-highlight px-5 py-4 text-sm leading-relaxed text-accent-ink">
-          <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-          <div>
-            <p className="font-mono-label mb-1 text-[11px] uppercase tracking-wide">
-              Content warning
-            </p>
-            {book.contentWarning}
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-serif-display text-lg leading-snug text-ink">{book.title}</h3>
+        <p className="mt-1 text-sm text-ink-soft">{book.author}</p>
+        {book.rating !== undefined && (
+          <div className="font-mono-label mt-3 inline-flex items-center gap-1.5 text-sm text-accent-ink">
+            <Star className="h-3.5 w-3.5 fill-current" /> {book.rating.toFixed(1)} / 5
           </div>
-        </div>
-      )}
-    </Card>
+        )}
+      </div>
+    </Link>
   );
 }
