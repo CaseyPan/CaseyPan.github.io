@@ -36,14 +36,6 @@ export async function generateMetadata({
   };
 }
 
-function formatDate(date: string) {
-  return new Date(date + "T00:00:00").toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 export default async function BookPage({
   params,
 }: {
@@ -100,7 +92,7 @@ export default async function BookPage({
 
               {book.dateFinished && (
                 <p className="font-mono-label mt-3 inline-flex items-center gap-1.5 text-xs text-ink-soft/70">
-                  <Calendar className="h-3 w-3" /> Finished {formatDate(book.dateFinished)}
+                  <Calendar className="h-3 w-3" /> Finished {book.dateFinished}
                 </p>
               )}
             </div>

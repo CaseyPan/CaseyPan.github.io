@@ -7,7 +7,7 @@ import { Sparkle } from "@/components/ui/Doodles";
 import { getAllNotesMeta, getSeriesWithNotes, noteCategories } from "@/lib/notes";
 
 export const metadata: Metadata = {
-  title: "Notes",
+  title: "Technical Notes",
   description: "Engineering and learning notes on systems, infrastructure, and AI infrastructure.",
 };
 
@@ -19,7 +19,7 @@ export default function NotesPage() {
     <>
       <PageHeader
         eyebrow="Engineering notes"
-        title="Notes"
+        title="Technical Notes"
         description="These notes document what I'm learning and how I currently understand it. Corrections and thoughtful discussions are always welcome."
       />
       <Container className="py-16 sm:py-20">

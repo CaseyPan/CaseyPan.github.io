@@ -47,7 +47,7 @@ export default function BeyondWorkPage() {
       <PageHeader
         eyebrow="Beyond Work"
         title="The rest of me"
-        description="The engineering side of this site is the headline — this is everything else. Books I've read, places I've been, and the occasional reflection."
+        description="Besides an engineer, I am also everything else. :D"
       />
       <Container className="py-16 sm:py-20">
         <div className="grid gap-6 sm:grid-cols-3">

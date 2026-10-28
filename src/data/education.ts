@@ -1,5 +1,6 @@
 export type Education = {
   school: string;
+  logo?: string; // path under /public
   degree: string;
   location: string;
   startDate: string;
@@ -10,6 +11,7 @@ export type Education = {
 export const education: Education[] = [
   {
     school: "University of Illinois Urbana-Champaign",
+    logo: "/images/logos/uiuc.svg",
     degree: "Master of Computer Science",
     location: "Champaign, IL",
     startDate: "Aug 2022",
@@ -17,6 +19,7 @@ export const education: Education[] = [
   },
   {
     school: "National Tsing Hua University",
+    logo: "/images/logos/nthu.svg",
     degree: "B.S. in Computer Science",
     location: "Hsinchu, Taiwan",
     startDate: "Sep 2017",

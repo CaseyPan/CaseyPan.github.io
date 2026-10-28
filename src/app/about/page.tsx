@@ -73,7 +73,7 @@ export default function AboutPage() {
               people&apos;s learning-in-public notes than most polished
               tutorials. You&apos;ll find some of that under{" "}
               <Link href="/notes" className="text-accent-ink underline decoration-highlight underline-offset-2">
-                Notes
+                Technical Notes
               </Link>
               .
             </p>

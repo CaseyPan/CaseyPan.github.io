@@ -3,6 +3,7 @@
 export type Role = {
   id: string;
   company: string;
+  logo?: string; // path under /public
   title: string;
   location: string;
   startDate: string;
@@ -16,6 +17,7 @@ export const roles: Role[] = [
   {
     id: "mediatek",
     company: "MediaTek",
+    logo: "/images/logos/mediatek.svg",
     title: "Software Development Engineer",
     location: "San Diego, CA",
     startDate: "Mar 2024",
@@ -34,6 +36,7 @@ export const roles: Role[] = [
   {
     id: "zillow",
     company: "Zillow Group",
+    logo: "/images/logos/zillow.svg",
     title: "Software Development Engineer Intern",
     location: "Remote",
     startDate: "May 2023",
@@ -49,6 +52,7 @@ export const roles: Role[] = [
   {
     id: "aws",
     company: "Amazon Web Services (AWS)",
+    logo: "/images/logos/aws.svg",
     title: "Cloud Support Intern",
     location: "Taipei, Taiwan",
     startDate: "May 2021",

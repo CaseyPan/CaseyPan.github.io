@@ -40,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const bookRoutes = books.map((book) => ({
     url: `${siteUrl}/beyond-work/books/${book.slug}`,
-    lastModified: book.dateFinished ?? new Date(),
+    lastModified: new Date(),
   }));
 
   return [...staticRoutes, ...noteRoutes, ...seriesRoutes, ...growthRoutes, ...bookRoutes];

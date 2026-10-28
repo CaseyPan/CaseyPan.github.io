@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Tag } from "@/components/ui/Tag";
 import { Card } from "@/components/ui/Card";
 import { MapPin, Calendar } from "lucide-react";
@@ -14,9 +15,22 @@ export function ExperienceTimeline({ roles }: { roles: Role[] }) {
           />
           <Card hover={false}>
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <h3 className="text-lg font-semibold text-ink">{role.title}</h3>
-                <p className="mt-0.5 text-sm font-medium text-accent-ink">{role.company}</p>
+              <div className="flex items-start gap-3">
+                {role.logo && (
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-surface p-2">
+                    <Image
+                      src={role.logo}
+                      alt={`${role.company} logo`}
+                      width={28}
+                      height={28}
+                      className="h-full w-full object-contain"
+                    />
+                  </span>
+                )}
+                <div>
+                  <h3 className="text-lg font-semibold text-ink">{role.title}</h3>
+                  <p className="mt-0.5 text-sm font-medium text-accent-ink">{role.company}</p>
+                </div>
               </div>
               <div className="font-mono-label flex flex-col items-end gap-1 text-xs text-ink-soft">
                 <span className="inline-flex items-center gap-1">

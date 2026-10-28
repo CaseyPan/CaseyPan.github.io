@@ -8,7 +8,7 @@ export type Book = {
   title: string;
   author: string;
   cover?: string; // path under /public, e.g. "/images/books/slug.jpg"
-  dateFinished?: string; // "YYYY-MM-DD" — when status is READ
+  dateFinished?: string; // free-form display string, e.g. "July 2026" — when status is READ
   status: BookStatus;
   rating?: number; // out of 5
   review: string[]; // paragraphs
@@ -21,7 +21,7 @@ export const books: Book[] = [
     title: "Anxious People",
     author: "Fredrik Backman",
     cover: "/images/books/anxious-people.jpg",
-    dateFinished: undefined, // TODO: when did you finish this one?
+    dateFinished: "July 2026",
     status: "READ",
     rating: 4.8,
     review: [
@@ -37,7 +37,7 @@ export const books: Book[] = [
     title: "Eleanor Oliphant is Completely Fine",
     author: "Gail Honeyman",
     cover: "/images/books/eleanor-oliphant-is-completely-fine.jpg",
-    dateFinished: undefined, // TODO: when did you finish this one?
+    dateFinished: "October 2026",
     status: "READ",
     rating: 3.8,
     review: [

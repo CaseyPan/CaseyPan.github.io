@@ -15,15 +15,15 @@ export function NotesPreviewSection() {
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SectionHeading
-            eyebrow="Latest notes"
-            title="Notes from what I'm building and learning"
+            eyebrow="Latest technical notes"
+            title="Technical notes from what I'm building and learning"
             description="Short, practical write-ups — some from professional systems work, some from learning AI infrastructure in the open."
           />
           <Link
             href="/notes"
             className="inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-medium text-accent-ink hover:underline"
           >
-            All notes <ArrowRight className="h-4 w-4" />
+            All technical notes <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 

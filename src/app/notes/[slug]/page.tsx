@@ -65,7 +65,7 @@ export default async function NotePage({
           href="/notes"
           className="inline-flex items-center gap-1.5 text-sm text-ink-soft transition-colors hover:text-accent-ink"
         >
-          <ArrowLeft className="h-4 w-4" /> All notes
+          <ArrowLeft className="h-4 w-4" /> All technical notes
         </Link>
 
         <header className="mt-6 max-w-3xl">

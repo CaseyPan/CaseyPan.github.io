@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { GraduationCap, MapPin, Calendar } from "lucide-react";
 import type { Education } from "@/data/education";
 
@@ -7,7 +8,19 @@ export function EducationList({ items }: { items: Education[] }) {
       {items.map((edu) => (
         <div key={edu.school} className="rounded-2xl border border-border bg-surface p-6">
           <div className="flex items-start gap-3">
-            <GraduationCap className="mt-0.5 h-4 w-4 shrink-0 text-sage" aria-hidden="true" />
+            {edu.logo ? (
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-surface p-1.5">
+                <Image
+                  src={edu.logo}
+                  alt={`${edu.school} logo`}
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+            ) : (
+              <GraduationCap className="mt-0.5 h-4 w-4 shrink-0 text-sage" aria-hidden="true" />
+            )}
             <div>
               <h3 className="text-base font-semibold text-ink">{edu.school}</h3>
               <p className="mt-0.5 text-sm text-accent-ink">{edu.degree}</p>
