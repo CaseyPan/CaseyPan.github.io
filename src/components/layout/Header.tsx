@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { Sparkle } from "@/components/ui/Doodles";
 import { primaryNav } from "@/data/navigation";
 import { profile } from "@/data/profile";
 
@@ -18,9 +19,10 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           <Link
             href="/"
-            className="font-serif-display text-lg text-ink"
+            className="font-serif-display flex items-center gap-1.5 text-lg text-ink"
             onClick={() => setOpen(false)}
           >
+            <Sparkle className="h-4 w-4 text-accent" />
             {profile.name}
           </Link>
 

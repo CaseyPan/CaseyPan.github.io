@@ -44,34 +44,32 @@ export function ProjectCard({ project }: { project: Project }) {
         ))}
       </div>
 
-      {(project.githubHref || project.githubNote || project.demoHref) && (
-        <div className="mt-5 flex items-center gap-4 border-t border-border pt-4 text-sm">
-          {project.githubHref ? (
-            <Link
-              href={project.githubHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent-ink"
-            >
-              <GithubIcon className="h-4 w-4" /> Code
-            </Link>
-          ) : project.githubNote ? (
-            <span className="font-mono-label inline-flex items-center gap-1.5 text-xs text-ink-soft/50">
-              <GithubIcon className="h-4 w-4" /> {project.githubNote}
-            </span>
-          ) : null}
-          {project.demoHref ? (
-            <Link
-              href={project.demoHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent-ink"
-            >
-              <ExternalLink className="h-4 w-4" /> Demo
-            </Link>
-          ) : null}
-        </div>
-      )}
+      <div className="mt-5 flex items-center gap-4 border-t border-border pt-4 text-sm">
+        {project.githubHref ? (
+          <Link
+            href={project.githubHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent-ink"
+          >
+            <GithubIcon className="h-4 w-4" /> Code
+          </Link>
+        ) : (
+          <span className="font-mono-label inline-flex items-center gap-1.5 text-xs text-ink-soft/50">
+            <GithubIcon className="h-4 w-4" /> {project.githubNote ?? "repo TODO"}
+          </span>
+        )}
+        {project.demoHref ? (
+          <Link
+            href={project.demoHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent-ink"
+          >
+            <ExternalLink className="h-4 w-4" /> Demo
+          </Link>
+        ) : null}
+      </div>
     </Card>
   );
 }

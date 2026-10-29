@@ -1,22 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --color-bg: #fafafa;
+  --color-bg: #fff9f4;
   --color-surface: #ffffff;
-  --color-ink: #171717;
-  --color-ink-soft: #666666;
-  --color-ink-muted: #999999;
-  /* "accent"/"sage" names are kept so existing component classes
-     (bg-accent, text-sage, etc.) don't need renaming — both now
-     resolve to neutral ink tones for the monochrome direction. */
-  --color-accent: #171717;
-  --color-accent-ink: #171717;
-  --color-sage: #999999;
-  --color-highlight: #f2f2f2;
-  --color-border: #eaeaea;
+  --color-ink: #28242b;
+  --color-ink-soft: #565058;
+  --color-accent: #b84d68;
+  --color-accent-ink: #7a3145;
+  --color-sage: #798d76;
+  --color-highlight: #f2dce2;
+  --color-border: #e8ddd8;
 
-  --font-serif: var(--font-inter);
-  --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-manrope);
   --font-mono: var(--font-jetbrains-mono);
 }
 
@@ -25,7 +21,6 @@
   --color-surface: var(--color-surface);
   --color-ink: var(--color-ink);
   --color-ink-soft: var(--color-ink-soft);
-  --color-ink-muted: var(--color-ink-muted);
   --color-accent: var(--color-accent);
   --color-accent-ink: var(--color-accent-ink);
   --color-sage: var(--color-sage);
@@ -88,19 +83,17 @@ body {
 
 ::selection {
   background: var(--color-highlight);
-  color: var(--color-ink);
+  color: var(--color-accent-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-ink);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 .font-serif-display {
-  font-family: var(--font-serif), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-family: var(--font-serif), Georgia, serif;
 }
 
 .font-mono-label {
@@ -114,8 +107,7 @@ body {
 }
 
 .prose-note h2 {
-  font-family: var(--font-serif), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 600;
+  font-family: var(--font-serif), Georgia, serif;
   font-size: 1.5rem;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
@@ -123,8 +115,7 @@ body {
 }
 
 .prose-note h3 {
-  font-family: var(--font-serif), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 600;
+  font-family: var(--font-serif), Georgia, serif;
   font-size: 1.2rem;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
@@ -137,9 +128,9 @@ body {
 }
 
 .prose-note a {
-  color: var(--color-ink);
+  color: var(--color-accent-ink);
   text-decoration: underline;
-  text-decoration-color: var(--color-border);
+  text-decoration-color: var(--color-highlight);
   text-underline-offset: 3px;
 }
 
@@ -157,15 +148,15 @@ body {
 .prose-note code {
   font-family: var(--font-mono), ui-monospace, monospace;
   background: var(--color-highlight);
-  color: var(--color-ink);
+  color: var(--color-accent-ink);
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.85em;
 }
 
 .prose-note pre {
-  background: #171717;
-  color: #f2f2f2;
+  background: #1e1a20;
+  color: #f2e9ec;
   border-radius: 12px;
   padding: 1.25rem;
   overflow-x: auto;
@@ -189,7 +180,7 @@ body {
 .hljs-literal,
 .hljs-section,
 .hljs-link {
-  color: #d4a5b3;
+  color: #e8a3b8;
 }
 
 .hljs-string,
@@ -197,7 +188,7 @@ body {
 .hljs-symbol,
 .hljs-bullet,
 .hljs-addition {
-  color: #b8c9a8;
+  color: #c9d9a8;
 }
 
 .hljs-title,
@@ -205,29 +196,29 @@ body {
 .hljs-type,
 .hljs-built_in,
 .hljs-class .hljs-title {
-  color: #d9c08f;
+  color: #f0c987;
 }
 
 .hljs-comment,
 .hljs-quote,
 .hljs-deletion,
 .hljs-meta {
-  color: #8a8a8a;
+  color: #8f8891;
 }
 
 .hljs-number,
 .hljs-regexp,
 .hljs-variable,
 .hljs-template-variable {
-  color: #a8b8cc;
+  color: #b7c9e8;
 }
 
 .prose-note blockquote {
-  border-left: 3px solid var(--color-ink);
+  border-left: 3px solid var(--color-accent);
   background: var(--color-highlight);
   padding: 0.9rem 1.25rem;
   border-radius: 0 12px 12px 0;
   margin: 1.5rem 0;
-  color: var(--color-ink);
+  color: var(--color-accent-ink);
   font-style: normal;
 }
