@@ -9,6 +9,10 @@ export const profile = {
   location: "Bay Area, CA",
   email: "caseyyc.pan@gmail.com",
   tagline: "Building reliable systems and collecting what I learn along the way.",
+  heroTagline: "Curious by nature. Engineer by profession.",
+  heroIntro:
+    "I build reliable systems, explore new ideas, and collect little moments along the way.",
+  heroTechLine: "C++ · Systems · Performance Optimization · Hardware/Software Integration",
   heroLead:
     "I build reliable, performance-conscious software and document what I learn along the way.",
   heroBody:

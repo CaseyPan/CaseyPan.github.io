@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Mail, FileText } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { Sparkle } from "@/components/ui/Doodles";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
 import { profile } from "@/data/profile";
 
@@ -13,10 +12,7 @@ export function Footer() {
       <Container className="py-12">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-sm">
-            <div className="font-serif-display flex items-center gap-1.5 text-lg text-ink">
-              <Sparkle className="h-4 w-4 text-accent" />
-              {profile.name}
-            </div>
+            <div className="font-serif-display text-lg text-ink">{profile.name}</div>
             <p className="mt-3 text-sm leading-relaxed text-ink-soft">
               {profile.tagline}
             </p>

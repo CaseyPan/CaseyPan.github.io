@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { Sparkle } from "@/components/ui/Doodles";
 
 export default function NotFound() {
   return (
     <Container className="flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
-      <Sparkle className="h-8 w-8 text-accent" />
-      <h1 className="font-serif-display mt-4 text-4xl text-ink">Page not found</h1>
+      <h1 className="font-serif-display text-4xl text-ink">Page not found</h1>
       <p className="mt-3 max-w-md text-base text-ink-soft">
         This page wandered off somewhere. Let&apos;s get you back to solid
         ground.

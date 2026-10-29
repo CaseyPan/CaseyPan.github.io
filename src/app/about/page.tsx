@@ -4,7 +4,6 @@ import { Mail, Download } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
-import { FlowerDoodle, Dots } from "@/components/ui/Doodles";
 import { Portrait } from "@/components/Portrait";
 import { profile, narrative } from "@/data/profile";
 
@@ -72,8 +71,8 @@ export default function AboutPage() {
               clearly and partly because I&apos;ve gotten more out of other
               people&apos;s learning-in-public notes than most polished
               tutorials. You&apos;ll find some of that under{" "}
-              <Link href="/notes" className="text-accent-ink underline decoration-highlight underline-offset-2">
-                Technical Notes
+              <Link href="/notes" className="text-ink underline decoration-border underline-offset-2">
+                Writing
               </Link>
               .
             </p>
@@ -89,8 +88,7 @@ export default function AboutPage() {
             <Portrait className="max-w-[260px]" />
 
             <Card hover={false} className="bg-highlight/50">
-              <div className="font-mono-label mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-wide text-accent-ink">
-                <FlowerDoodle className="h-4 w-4 text-accent" />
+              <div className="font-mono-label mb-3 text-xs uppercase tracking-wide text-ink-muted">
                 The short version
               </div>
               <dl className="space-y-4 text-sm">
@@ -130,8 +128,6 @@ export default function AboutPage() {
                 </a>
               </div>
             </Card>
-
-            <Dots className="h-2 w-16 text-accent/50" />
           </div>
         </div>
       </Container>

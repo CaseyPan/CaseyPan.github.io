@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Container } from "@/components/ui/Container";
-import { Sparkle } from "@/components/ui/Doodles";
 
 export function PageHeader({
   eyebrow,
@@ -14,8 +13,7 @@ export function PageHeader({
   return (
     <div className="border-b border-border bg-surface">
       <Container className="py-14 sm:py-20">
-        <div className="font-mono-label mb-3 flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-accent-ink">
-          <Sparkle className="h-3.5 w-3.5 text-accent" />
+        <div className="font-mono-label mb-3 text-xs uppercase tracking-[0.14em] text-ink-muted">
           {eyebrow}
         </div>
         <h1 className="font-serif-display text-4xl leading-tight text-ink sm:text-5xl">

@@ -16,26 +16,14 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#FFF9F4",
+          background: "#FAFAFA",
           position: "relative",
         }}
       >
         <div
           style={{
-            position: "absolute",
-            top: 72,
-            right: 96,
-            width: 28,
-            height: 28,
-            background: "#B84D68",
-            transform: "rotate(45deg)",
-            borderRadius: 6,
-          }}
-        />
-        <div
-          style={{
             fontSize: 26,
-            color: "#B84D68",
+            color: "#999999",
             fontFamily: "monospace",
             letterSpacing: 2,
             marginBottom: 24,
@@ -46,7 +34,7 @@ export default async function OpengraphImage() {
         <div
           style={{
             fontSize: 88,
-            color: "#28242B",
+            color: "#171717",
             fontWeight: 600,
             lineHeight: 1.05,
             display: "flex",
@@ -57,7 +45,7 @@ export default async function OpengraphImage() {
         <div
           style={{
             fontSize: 32,
-            color: "#565058",
+            color: "#666666",
             marginTop: 28,
             maxWidth: 900,
             display: "flex",
